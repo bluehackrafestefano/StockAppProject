@@ -13,6 +13,7 @@ from .serializers import (
     ProductSerializer,
     FirmSerializer,
     StockSerializer,
+    BrandProductSerializer,
 )
 from rest_framework.permissions import DjangoModelPermissions
 from django_filters.rest_framework import DjangoFilterBackend
@@ -58,3 +59,9 @@ class StockView(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['firm', 'price']
     search_fields = ['firm', 'product']
+
+
+class BrandProductView(viewsets.ModelViewSet):
+    queryset = Brand.objects.all()
+    serializer_class = BrandProductSerializer
+    # permission_classes = [DjangoModelPermissions]

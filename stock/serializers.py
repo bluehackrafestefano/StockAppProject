@@ -47,6 +47,17 @@ class ProductSerializer(serializers.ModelSerializer):
         read_only_fields = ('stock',)
 
 
+class BrandProductSerializer(serializers.ModelSerializer):
+    products = ProductSerializer(many=True)
+    class Meta:
+        model = Brand
+        fields = (
+            'id',
+            'name',
+            'products',
+        )
+
+
 class FirmSerializer(serializers.ModelSerializer):
     class Meta:
         model = Firm
