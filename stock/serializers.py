@@ -57,3 +57,36 @@ class FirmSerializer(serializers.ModelSerializer):
             'address',
         )
     
+
+class StockSerializer(serializers.ModelSerializer):
+    firm = serializers.StringRelatedField()
+    firm_id = serializers.IntegerField(write_only=True)
+    product= serializers.StringRelatedField()
+    product_id = serializers.IntegerField(write_only=True)
+    user = serializers.StringRelatedField()
+
+    class Meta:
+        model = Stock
+        fields = (
+            'id',
+            'user',
+            'firm',
+            'firm_id',
+            'transaction',
+            'product',
+            'product_id',
+            'quantitiy',
+            'price',
+            'price_total',
+        )
+        read_only_fields = ('price_total',)
+
+    def validate(self, data):
+        """
+        Check if the quantity mor then product stock.
+        """
+        if data['transaction'] == 'O':
+            product = Product.objects.get(id=data['product_id'])
+            if data.get('quantitiy') > product.stock:
+                raise serializers.ValidationError(f"Do not have enough stock! Current stock is {product.stock}")
+        return data

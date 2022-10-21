@@ -4,6 +4,7 @@ from .views import (
     BrandView,
     ProductView,
     FirmView,
+    StockView,
 )
 
 
@@ -12,5 +13,6 @@ router.register('category', CategoryView)
 router.register('brand', BrandView)
 router.register('product', ProductView)
 router.register('firm', FirmView)
+router.register('stock', StockView)
 
 urlpatterns = router.urls
